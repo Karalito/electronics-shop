@@ -8,8 +8,7 @@ const products = [
         'category': 'Electronics/Smartphones',
         'price': 299.99,
         'countInStock': 50,
-        'rating': 4.5,
-        'numReviews': 12,
+        'isPromoted': true,
     },
     {
         '_id': 2,
@@ -20,8 +19,7 @@ const products = [
         'category': 'Electronics/Headphones',
         'price': 149.99,
         'countInStock': 50,
-        'rating': 4.3,
-        'numReviews': 8,
+        'isPromoted': false,
     },
     {
         '_id': 3,
@@ -31,9 +29,8 @@ const products = [
         'brand': 'Samsung',
         'category': 'Electronics/Headphones',
         'price': 149.99,
-        'countInStock': 50,
-        'rating': 4.3,
-        'numReviews': 8,
+        'countInStock': 0,
+        'isPromoted': false,
     },
     {
         '_id': 4,
@@ -44,8 +41,7 @@ const products = [
         'category': 'Electronics/Smartphones',
         'price': 1859.00,
         'countInStock': 20,
-        'rating': 5,
-        'numReviews': 4,
+        'isPromoted': true,
     },
     {
         '_id': 5,
@@ -56,8 +52,7 @@ const products = [
         'category': 'Electronics/Smartwatches',
         'price': 229.00,
         'countInStock': 70,
-        'rating': 4,
-        'numReviews': 14,
+        'isPromoted': true,
     },
 ]
 export default products
