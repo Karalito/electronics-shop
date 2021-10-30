@@ -68,6 +68,12 @@ function ProductScreen({ match }) {
           </ListGroup>
         </Col>
       </Row>
+      <Row>
+      <h3>Parameters</h3>
+      <Col md={3}>
+        {product.parameters_id}
+      </Col>
+      </Row>
     </div>
   );
 }
