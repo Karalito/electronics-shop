@@ -38,6 +38,10 @@ class RamAmount(models.Model):
 class InternalMemory(models.Model):
      _id = models.AutoField(primary_key=True, editable=False)
      internal_memory_amount = models.IntegerField(null=True, blank=True, default=0) #GB
+
+     class Meta:
+        verbose_name_plural = "InternalMemories"
+
      def __str__(self):
          return str(self.internal_memory_amount)
 
@@ -79,6 +83,9 @@ class ProccessorAndOs(models.Model):
     cpu_id = models.ForeignKey(Cpu, on_delete=models.SET_NULL, null=True)
     gpu_id = models.ForeignKey(Gpu, on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        verbose_name_plural = "Processors and Os"
+
     def __str__(self):
         return str(self._id)
 
@@ -87,9 +94,12 @@ class ProccessorAndOs(models.Model):
 
 class Parameters(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
-    common_id = models.ForeignKey(GeneralInfo, on_delete=models.SET_NULL, null=True)
+    general_id = models.ForeignKey(GeneralInfo, on_delete=models.SET_NULL, null=True)
     memory_id = models.ForeignKey(MemoryInfo, on_delete=models.SET_NULL, null=True)
     proccessor_and_os_id =  models.ForeignKey(ProccessorAndOs, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name_plural = "Parameters"
 
     def __str__(self):
         return str(self._id)
@@ -99,6 +109,9 @@ class Category(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return self.name
 
@@ -107,6 +120,9 @@ class SubCategory(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Sub Catagories"
 
     def __str__(self):
         return self.name
@@ -135,6 +151,11 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
+        print()
         return self.name
+
+    def print():
+        print(Product.objects.select_related())
+    
 
 
