@@ -1,28 +1,28 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react'
+import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 function Product({ product }) {
   return (
-    <Card className="my-3 py-3 rounded">
+    <Card className='my-3 py-3 rounded'>
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} />
       </Link>
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
+          <Card.Title as='div'>
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>
-        <Card.Text as="h3">${product.price}</Card.Text>
+        <Card.Text as='h3'>${product.price}</Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Link to={`/product/${product._id}`} className="card-button">
+        <Link to={`/product/${product._id}`} className='card-button'>
           View
         </Link>
       </Card.Footer>
     </Card>
-  );
+  )
 }
 
-export default Product;
+export default Product
