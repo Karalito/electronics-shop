@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from ..models import Product
-from ..products import products
 from ..serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
 
 from rest_framework import status
