@@ -11,7 +11,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import ShippingScreen from './screens/ShippingScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
-import UserOrdersScreen from './screens/UserOrdersScreen'
+import UserOrdersScreen from './screens/UserOrderScreen'
 function App() {
   return (
     <Router>
