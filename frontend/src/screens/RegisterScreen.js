@@ -86,7 +86,7 @@ function RegisterScreen({ location, history }) {
           <Form.Control
             required
             type='password'
-            placeholder='Enter your Password'
+            placeholder='Confirm your Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>

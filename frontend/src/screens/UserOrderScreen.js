@@ -144,13 +144,13 @@ function UserOrdersScreen({ match }) {
                   {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
-                  <Message variant='success'>Paid On {order.paidAt}</Message>
+                  <Message variant='success'>Paid At {order.paidAt.substring(0, 10)}</Message>
                 ) : (
                   <Message variant='warning'>Not Paid</Message>
                 )}
                 {order.isDelivered ? (
                   <Message variant='success'>
-                    Delivered On {order.deliveredAt}
+                    Delivered AT {order.deliveredAt.substring(0, 10)}
                   </Message>
                 ) : (
                   <Message variant='warning'>Not Delivered</Message>

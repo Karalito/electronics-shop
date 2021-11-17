@@ -13,7 +13,7 @@ function Header() {
   const logoutHandler = () => {
     dispatch(logout())
   }
-  
+
   return (
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -44,7 +44,21 @@ function Header() {
                   </Nav.Link>
                 </LinkContainer>
               )}
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title='Admin Panel' id='adminmenu'>
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item>User List</NavDropdown.Item>
+                  </LinkContainer>
 
+                  <LinkContainer to='/admin/productlist'>
+                    <NavDropdown.Item>Product List</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to='/admin/orderlist'>
+                    <NavDropdown.Item>Order List</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
               <LinkContainer to='/cart'>
                 <Nav.Link href='/cart'>
                   <i className='fas fa-shopping-cart'></i>Cart

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col, Table } from 'react-bootstrap'
-import {LinkContainer} from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Loader from '../components/Loader'
@@ -11,9 +11,7 @@ import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { ordersListMy } from '../actions/orderActions'
 
-
 function ProfileScreen({ history }) {
-
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
   const [email, setEmail] = useState('')
@@ -24,7 +22,6 @@ function ProfileScreen({ history }) {
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
-
   const { user, loading, error } = userDetails
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -34,13 +31,13 @@ function ProfileScreen({ history }) {
   const { success } = userUpdateProfile
 
   const orderListMy = useSelector((state) => state.orderListMy)
-  const { loading:loadingOrders, error: errorOrders, orders } = orderListMy
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
     } else {
-      if (!user || !user.name || success) {
+      if (!user || !user.name || success || userInfo._id != user._id) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
         dispatch(ordersListMy())
@@ -128,7 +125,7 @@ function ProfileScreen({ history }) {
             <Form.Control
               required
               type='password'
-              placeholder='Enter your Password'
+              placeholder='Confirm your Password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
@@ -142,38 +139,46 @@ function ProfileScreen({ history }) {
 
       <Col md={9}>
         <h2>My Orders</h2>
-        {loadingOrders ?(
-          <Loader/>
-        ): errorOrders ? (
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
-        ): (
-          <Table striped responsive className='table-sm'>
+        ) : (
+          <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Paid</th>
-                <th>Delivered</th>
+                <th>Order Date</th>
+                <th>Total Price</th>
+                <th>Paid Status</th>
+                <th>Delivered Status</th>
               </tr>
             </thead>
             <tbody>
-              {orders.map(order =>(
+              {orders.map((order) => (
                 <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{order.totalPrice}€</td>
                   <td>
-                    {order._id}
+                    {order.isPaid ? (
+                      <p>Paid At: {order.paidAt.substring(0, 10)}</p>
+                    ) : (
+                      <p>
+                        Not Paid{' '}
+                        <i className='fa fa-times' style={{ color: 'red' }}></i>
+                      </p>
+                    )}
                   </td>
                   <td>
-                    {order.createdAt.substring(0,10)}
-                  </td>
-                  <td>
-                    {order.totalPrice}€
-                  </td>
-                  <td>
-                    {order.isPaid ? <p>Paid At: {order.paidAt.substring(0,10)}</p> : (<p>Not Paid <i className='fa fa-times' style={{color:'red'}}></i></p>)}
-                  </td>
-                  <td>
-                    {order.isDelivered? <p>Delivered At: {order.deliveredAt.substring(0,10)}</p> : (<p>Is not delivered <i className='fa fa-times' style={{color:'red'}}></i></p>)}
+                    {order.isDelivered ? (
+                      <p>Delivered At: {order.deliveredAt.substring(0, 10)}</p>
+                    ) : (
+                      <p>
+                        Is not delivered{' '}
+                        <i className='fa fa-times' style={{ color: 'red' }}></i>
+                      </p>
+                    )}
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
