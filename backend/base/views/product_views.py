@@ -6,9 +6,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from ..models import Product
-from ..serializers import ProductSerializer, UserSerializer, UserSerializerWithToken
+from ..serializers import ProductSerializer
 
 from rest_framework import status
+
 
 @api_view(['GET'])
 def getProducts(request):
@@ -16,8 +17,62 @@ def getProducts(request):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def getProduct(request, pk):
     product = Product.objects.get(_id=pk)
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createProduct(request):
+    user = request.user
+    product = Product.objects.create(
+        user=user,
+        name='Example Name',
+        price=0,
+        brand='Example Brand',
+        count_in_stock=0,
+        category='Example Category',
+        description=''
+    )
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateProduct(request, pk):
+    data = request.data
+    product = Product.objects.get(_id=pk)
+
+    product.name = data['name']
+    product.price = data['price']
+    product.brand = data['brand']
+    product.count_in_stock = data['count_in_stock']
+    product.category = data['category']
+    product.description = data['description']
+
+    product.save()
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteProduct(request, pk):
+    product = Product.objects.get(_id=pk)
+    product.delete()
+    return Response('Product Deleted')
+
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+    product_id = data['product_id']
+    product = Product.objects.get(_id=product_id)
+
+    product.image = request.FILES.get('image')
+    product.save()
+    return Response('Image was uploaded')

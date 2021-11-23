@@ -6,26 +6,13 @@ from .models import *
 
 class ProductCreation(admin.ModelAdmin):
     fieldsets = [
-        ("Product information", {"fields": ["user", "subcategory", 
+        ("Product information", {"fields": ["user", "category", 
         "name", "brand", "image", "description", "price", 
-        "is_promoted", "count_in_stock"]}),
-        ("Product parameters", {"fields": ["parameters_id"]})
+        "is_promoted", "count_in_stock"]})
     ]
 
-admin.site.register(MenuLanguage)
-admin.site.register(GeneralInfo)
-admin.site.register(RamAmount)
-admin.site.register(InternalMemory)
-admin.site.register(MemoryInfo)
-admin.site.register(OperationalSystem)
-admin.site.register(Cpu)
-admin.site.register(Gpu)
-admin.site.register(ProccessorAndOs)
-admin.site.register(Parameters)
-admin.site.register(Category)
-admin.site.register(SubCategory)
-admin.site.register(Brand)
 admin.site.register(Product,ProductCreation)
 admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
+admin.site.register(Review)

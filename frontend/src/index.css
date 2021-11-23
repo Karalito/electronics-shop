@@ -20,9 +20,7 @@ h3{
   padding: 1rem 0;
 }
 
-i{
- padding: 0 10px; 
-}
+
 
 .card{
   height: 100%;
@@ -65,4 +63,8 @@ i{
 }
 .product-column:hover{
   transform: translateY(-5px);
+}
+
+.rating span{
+  margin: 0.1rem;
 }

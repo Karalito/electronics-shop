@@ -61,7 +61,7 @@ function Header() {
               )}
               <LinkContainer to='/cart'>
                 <Nav.Link href='/cart'>
-                  <i className='fas fa-shopping-cart'></i>Cart
+                  <i className='fas fa-shopping-cart' style={{padding: '0 10px'}}></i>Cart
                 </Nav.Link>
               </LinkContainer>
             </Nav>
