@@ -17,6 +17,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+import re
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -38,18 +39,31 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
-    try:
-        user = User.objects.create(
-            first_name=data['name'],
-            last_name=data['surname'],
-            email=data['email'],
-            password=make_password(data['password'])
-        )
+    pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
 
-        serializer = UserSerializerWithToken(user, many=False)
-        return Response(serializer.data)
-    except:
-        message = {'detail': 'User with this email already exists!'}
+    if re.search(pattern, data['password']):
+        try:
+            patternEmail = "[a-zA-Z0-9.]+@[a-zA-Z]+\.(com|net|org)"
+            if(re.search(patternEmail, data['email'])):
+                user = User.objects.create(
+                    first_name=data['name'],
+                    last_name=data['surname'],
+                    email=data['email'],
+                    password=make_password(data['password'])
+                )
+
+                serializer = UserSerializerWithToken(user, many=False)
+                return Response(serializer.data)
+            else:
+                message = {
+                    'detail': 'Email must contain @ symbol and .com or .net or .org'}
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            message = {'detail': 'User with this email already exists!'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        message = {
+            'detail': 'Password must contain: An uppercase and lowercase character, a number and symbol.'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -89,16 +103,16 @@ def getUsers(request):
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
-def getUserById(request,pk):
+def getUserById(request, pk):
     user = User.objects.get(id=pk)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateUser(request, pk):
     user = User.objects.get(id=pk)
-    
 
     data = request.data
     user.first_name = data['name']
@@ -113,6 +127,7 @@ def updateUser(request, pk):
 
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])

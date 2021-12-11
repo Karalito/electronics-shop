@@ -1,8 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import SearchBox from './SearchBox'
 import { logout } from '../actions/userActions'
+
+
 
 function Header() {
   const userLogin = useSelector((state) => state.userLogin)
@@ -14,20 +18,25 @@ function Header() {
     dispatch(logout())
   }
 
+
   return (
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
-        <Container>
+        <Container style={{justifyContent: 'space-between', padding: '15px 0'}}>
           <LinkContainer to='/'>
             <Navbar.Brand>Amplo</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+          
             <Nav
-              className='me-auto my-2 my-lg-0'
-              style={{ maxHeight: '100px' }}
+              className='my-2 my-lg-0'
+              style={{ maxHeight: '100px', marginLeft: 'auto', marginRight: '0' }}
               navbarScroll
             >
+      
+            <SearchBox/>
+         
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
@@ -40,7 +49,7 @@ function Header() {
               ) : (
                 <LinkContainer to='/login'>
                   <Nav.Link href='/login'>
-                    <i className='far fa-user'></i>Login
+                    <i className='far fa-user' style={{padding: '0 10px'}}></i>Login
                   </Nav.Link>
                 </LinkContainer>
               )}

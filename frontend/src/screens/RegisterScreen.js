@@ -34,7 +34,7 @@ function RegisterScreen({ location, history }) {
   const submitHandler = (e) => {
     e.preventDefault()
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setMessage('Passwords do not match !')
     } else {
       dispatch(register(name, surname, email, password))
