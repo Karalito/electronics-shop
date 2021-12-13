@@ -8,7 +8,7 @@ class ProductCreation(admin.ModelAdmin):
     fieldsets = [
         ("Product information", {"fields": ["user", "category", 
         "name", "brand", "image", "description", "price", 
-        "is_promoted", "count_in_stock"]})
+        "is_promoted", "count_in_stock", "numReviews", "rating"]})
     ]
 
 admin.site.register(Product,ProductCreation)

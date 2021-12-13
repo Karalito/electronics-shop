@@ -72,17 +72,21 @@ def registerUser(request):
 def updateUserProfile(request):
     user = request.user
     serializer = UserSerializerWithToken(user, many=False)
+    try:
+        data = request.data
+        user.first_name = data['name']
+        user.last_name = data['surname']
+        user.email = data['email']
 
-    data = request.data
-    user.first_name = data['name']
-    user.last_name = data['surname']
-    user.email = data['email']
+        if data['password'] != '':
+            user.password = make_password(data['password'])
 
-    if data['password'] != '':
-        user.password = make_password(data['password'])
-
-    user.save()
-    return Response(serializer.data)
+        user.save()
+        return Response(serializer.data)
+    except:
+        message = {'detail': 'Password cannot be blank!'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
 @api_view(['GET'])
@@ -110,10 +114,10 @@ def getUserById(request, pk):
 
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
 def updateUser(request, pk):
     user = User.objects.get(id=pk)
-
+    
     data = request.data
     user.first_name = data['name']
     user.last_name = data['surname']
